@@ -32,13 +32,14 @@ baseurl='https://{}:9443/'.format(args.redis_host)
 
 j = requests.get(baseurl+"/v1/bdbs", auth=auth, headers=headers_sent, timeout=timeout, verify=verifyssl)
 if j.status_code != 200:
+    print('Unable to fetch db information. Status code:{} message:{}'.format(j.status_code, j.content))
     sys.exit(1)
 
 info=j.json()
 db_names = list(map(lambda x: x['name'], info))
 
 if args.db_name in db_names:
-    print('Database {} already exists'.format("args.db_name"))
+    print('Database {} already exists'.format(args.db_name))
     sys.exit(0)
 
 db_settings = {
