@@ -18,14 +18,6 @@ sudo cp $VAGRANT_HOST_DIR/JenkinsConfig/users/admin/config.xml /var/lib/jenkins/
 sudo chown -R jenkins:jenkins /var/lib/jenkins/users/
 
 ########################
-# Node & npm
-########################
-echo "Installing Node & npm"
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get -y install nodejs
-sudo apt-get -y install npm
-
-########################
 # Docker
 ########################
 echo "Installing Docker"
@@ -50,9 +42,15 @@ sudo service nginx start
 ########################
 echo "Configuring nginx"
 cd /etc/nginx/sites-available
-sudo rm default ../sites-enabled/default
+sudo rm -f default ../sites-enabled/default
 sudo cp /mnt/host_machine/VirtualHost/jenkins /etc/nginx/sites-available/
-sudo ln -s /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/
 sudo service nginx restart
 sudo service jenkins restart
 echo "Success"
+
+########################
+# Misc tools
+########################
+echo "Installing tools"
+sudo apt-get -y install redis-tools git htop build-essential autoconf automake libpcre3-dev libevent-dev pkg-config zlib1g-dev libssl-dev > /dev/null 2>&1

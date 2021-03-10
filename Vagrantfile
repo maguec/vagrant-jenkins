@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/mnt/host_machine"
   config.vm.provider :virtualbox do |vb|
       vb.name = "jenkins"
-      vb.memory = "2048"
+      vb.memory = "4096"
   end
   config.vm.provision "shell" do |s|
     s.path = "provision.sh"
