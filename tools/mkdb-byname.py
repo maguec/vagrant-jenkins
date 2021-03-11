@@ -46,6 +46,7 @@ db_settings = {
     'name': args.db_name,
     'memory_size': args.memory_size,
     'shards_count': args.shard_count,
+    'shard_key_regex': [{'regex': '.*\\{(?<tag>.*)\\}.*'}, {'regex': '(?<tag>.*)'}]
 }
 
 if args.db_password:
