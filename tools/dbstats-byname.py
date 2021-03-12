@@ -5,6 +5,7 @@ import requests
 import sys
 import urllib3
 import json
+import csv
 
 
 urllib3.disable_warnings()
@@ -32,19 +33,34 @@ if j.status_code != 200:
 
 info=j.json()
 db_names = dict(map(lambda x: (x['name'], x['uid']), info))
-print(db_names)
 
 
 if args.db_name not in db_names.keys():
     print('Database {} does not exist'.format(args.db_name))
     sys.exit(0)
 
-del_url='{}v1/bdbs/{}'.format(baseurl, db_names[args.db_name])
-x= requests.delete(del_url, auth=auth, headers=headers_sent, timeout=timeout, verify=verifyssl)
+stats_url='{}v1/bdbs/stats/{}'.format(baseurl, db_names[args.db_name])
+x = requests.get(
+    stats_url,
+    auth=auth,
+    headers=headers_sent,
+    timeout=timeout,
+    verify=verifyssl,
+    params={'interval': '1sec'}
+    )
 if x.status_code == 200:
-    print('Database {} sucessfully deleted'.format(args.db_name))
+    data_file = open('data_file.csv', 'w')
+    csv_writer = csv.writer(data_file)
+    count = 0
+    for line in x.json()['intervals']:
+        if count == 0:
+            header = line.keys()
+            csv_writer.writerow(header)
+            count += 1
+        csv_writer.writerow(line.values())
+    data_file.close()
     sys.exit(0)
 else:
-    print("Unknown error while trying to delte database")
+    print("Unknown error while trying to grab database stats")
     x.json()
     sys.exit(1)
