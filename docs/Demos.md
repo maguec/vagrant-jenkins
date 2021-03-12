@@ -70,7 +70,7 @@ https://github.com/Redislabs-Solution-Architects/CI-Pipelines-Enterprise-Example
 ---
 
 ### Redis Enterprise Examples
-#### Run a local docker container
+#### Run against a current cluster
 
 <img src="remote_flow.svg"  height="400" style="background:none; border:none; box-shadow:none;vertical-align:middle ">
 
@@ -98,3 +98,19 @@ https://github.com/maguec/vagrant-jenkins/tree/master/tools <br><br>
 ---
 
 ## Demo Time
+
+
+---
+
+### Appendix : More information
+
+#### Memtier Benchmark
+
+https://github.com/RedisLabs/memtier_benchmark
+
+#### Prometheus Monitoring Guide
+
+https://github.com/Redislabs-Solution-Architects/RedisEnterprisePrometheus#contents
+
+These run books give hints as to what to monitor and provide examples of mitigation steps 
+
